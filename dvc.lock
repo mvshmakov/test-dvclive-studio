@@ -1,0 +1,15 @@
+schema: '2.0'
+stages:
+  test-dvclive:
+    cmd: python test_live_metrics.py
+    params:
+      params.yaml:
+        epochs: 5
+    outs:
+    - path: dvclive
+      md5: 59ffcc3b9c17175f4fef64b29f6b07f5.dir
+      size: 10137
+      nfiles: 3
+    - path: dvclive.json
+      md5: 99ffba2e3880362908577429f9c229bb
+      size: 77

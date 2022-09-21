@@ -1,0 +1,4 @@
+dvc
+requests
+git+https://github.com/iterative/dvclive@live-metrics-studio
+git+https://github.com/pyca/pyopenssl

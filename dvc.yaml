@@ -1,0 +1,11 @@
+stages:
+  test-dvclive:
+    cmd: python test_live_metrics.py
+    params:
+      - epochs
+    plots:
+      - dvclive:
+          cache: false
+    metrics:
+      - dvclive.json:
+          cache: false
