@@ -10,14 +10,17 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
       - name: Install
         run: pip install -r requirements.txt
       - name: Train model
         env:
-          STUDIO_ENDPOINT: https://dev.iterative.ai/api/live
+          STUDIO_ENDPOINT: ${{ secrets.STUDIO_ENDPOINT }}
           STUDIO_REPO_URL: ${{ secrets.STUDIO_REPO_URL }}
           STUDIO_TOKEN: ${{ secrets.STUDIO_TOKEN }}
-          DVCLIVE_LOGLEVEL: DEBUG
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DVCLIVE_LOGLEVEL: ${{ secrets.DVCLIVE_LOGLEVEL }}
         run: |
           dvc repro
       - name: CML PR
