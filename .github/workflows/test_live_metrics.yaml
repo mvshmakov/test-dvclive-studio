@@ -1,0 +1,37 @@
+name: Model training with Live Metrics in Studio
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  # setup-environment:
+    # - name: Prepare environment
+    #   uses: ./.github/workflows/warm_up_caches.yaml
+
+  train:
+    runs-on: ubuntu-latest
+    name: Train model and report results
+    # needs: setup-environment
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup environment
+        uses: ./.github/actions/setup_environment
+
+      - name: Train model
+        env:
+          STUDIO_ENDPOINT: ${{ secrets.STUDIO_ENDPOINT }}
+          STUDIO_REPO_URL: ${{ secrets.STUDIO_REPO_URL }}
+          STUDIO_TOKEN: ${{ secrets.STUDIO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DVCLIVE_LOGLEVEL: ${{ secrets.DVCLIVE_LOGLEVEL }}
+        run: dvc repro
+
+      - name: Update CML PR
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm exec -- cml pr --rebase "dvc.lock" "params.yaml" "dvclive"
