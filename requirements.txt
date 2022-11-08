@@ -1,0 +1,4 @@
+dvc
+dvclive
+requests
+git+https://github.com/pyca/pyopenssl
