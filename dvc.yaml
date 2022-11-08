@@ -4,8 +4,8 @@ stages:
     params:
       - epochs
     plots:
-      - dvclive:
+      - dvclive/plots:
           cache: false
     metrics:
-      - dvclive.json:
+      - dvclive/metrics.json:
           cache: false

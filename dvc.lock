@@ -6,10 +6,10 @@ stages:
       params.yaml:
         epochs: 5
     outs:
-    - path: dvclive
-      md5: 59ffcc3b9c17175f4fef64b29f6b07f5.dir
-      size: 10137
-      nfiles: 3
-    - path: dvclive.json
-      md5: 99ffba2e3880362908577429f9c229bb
+    - path: dvclive/metrics.json
+      md5: 589680c59c4354e5834b392864de3190
       size: 77
+    - path: dvclive/plots
+      md5: 5a21b03c7c574d46244f061457f04991.dir
+      size: 224
+      nfiles: 2
