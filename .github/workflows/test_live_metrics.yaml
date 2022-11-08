@@ -1,0 +1,75 @@
+name: Model training with Live Metrics in Studio
+on:
+  workflow_dispatch:
+  pull_request:
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup python
+        id: setup-python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Restore python virtual environment
+        uses: syphar/restore-virtualenv@v1
+        id: cache-virtualenv
+        with:
+          requirement_files: requirements.txt
+      
+      - name: Restore pip download cache
+        if: steps.cache-virtualenv.outputs.cache-hit != 'true'
+        uses: syphar/restore-pip-download-cache@v1
+
+      - name: Install python dependencies
+        if: steps.cache-virtualenv.outputs.cache-hit != 'true'
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Setup node.js
+        id: setup-nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Get npm cache directory
+        id: get-npm-cache-dir
+        run: |
+          NPM_CACHE_DIR="$(npm config get cache)"
+          echo "NPM_CACHE_DIR=$NPM_CACHE_DIR" >> $GITHUB_OUTPUT
+
+      - name: Restore npm cache
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+            ${{ steps.get-npm-cache-dir.outputs.NPM_CACHE_DIR }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install node.js dependencies
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Train model
+        env:
+          STUDIO_ENDPOINT: ${{ secrets.STUDIO_ENDPOINT }}
+          STUDIO_REPO_URL: ${{ secrets.STUDIO_REPO_URL }}
+          STUDIO_TOKEN: ${{ secrets.STUDIO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DVCLIVE_LOGLEVEL: ${{ secrets.DVCLIVE_LOGLEVEL }}
+        run: dvc repro
+
+      - name: Update CML PR
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm exec -- cml pr --rebase "dvc.lock" "params.yaml" "dvclive"
