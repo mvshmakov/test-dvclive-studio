@@ -8,9 +8,9 @@ stages:
         trigger: 1
     outs:
     - path: dvclive/metrics.json
-      md5: 589680c59c4354e5834b392864de3190
+      md5: 74f374ed992d62d655a5fd603bf0a59f
       size: 77
     - path: dvclive/plots
-      md5: 5a21b03c7c574d46244f061457f04991.dir
+      md5: ae5224f585729b5d511bb321296b99ab.dir
       size: 224
       nfiles: 2
