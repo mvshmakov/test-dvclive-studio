@@ -5,12 +5,12 @@ stages:
     params:
       params.yaml:
         epochs: 5
-        trigger: 1
+        trigger: 2
     outs:
     - path: dvclive/metrics.json
-      md5: 589680c59c4354e5834b392864de3190
+      md5: 43e8cd8c0db9ada990f67c04b3adef4e
       size: 77
     - path: dvclive/plots
-      md5: 5a21b03c7c574d46244f061457f04991.dir
-      size: 224
+      md5: e9beda6141a9c7584d3f6d2c6f5e7a1e.dir
+      size: 225
       nfiles: 2
