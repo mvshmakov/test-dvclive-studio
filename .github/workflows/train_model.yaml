@@ -16,7 +16,6 @@ jobs:
 
       - name: Train model
         env:
-          STUDIO_ENDPOINT: ${{ secrets.STUDIO_ENDPOINT }}
           STUDIO_REPO_URL: ${{ secrets.STUDIO_REPO_URL }}
           STUDIO_TOKEN: ${{ secrets.STUDIO_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
