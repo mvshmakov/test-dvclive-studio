@@ -1,6 +1,8 @@
 name: Model training with Live Metrics in Studio
 on:
   pull_request:
+env:
+  DEFAULT_STUDIO_ENDPOINT: https://studio.iterative.ai/api/live
 jobs:
   train:
     runs-on: ubuntu-latest
@@ -20,7 +22,7 @@ jobs:
           STUDIO_TOKEN: ${{ secrets.STUDIO_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DVCLIVE_LOGLEVEL: ${{ secrets.DVCLIVE_LOGLEVEL }}
-          STUDIO_ENDPOINT: ${{ secrets.STUDIO_ENDPOINT || https://studio.iterative.ai/api/live }}
+          STUDIO_ENDPOINT: ${{ secrets.STUDIO_ENDPOINT || env.DEFAULT_STUDIO_ENDPOINT }}
         run: dvc repro
 
       - name: Report results
