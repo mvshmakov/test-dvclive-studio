@@ -20,6 +20,7 @@ jobs:
           STUDIO_TOKEN: ${{ secrets.STUDIO_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DVCLIVE_LOGLEVEL: ${{ secrets.DVCLIVE_LOGLEVEL }}
+          STUDIO_ENDPOINT: ${{ secrets.STUDIO_ENDPOINT || "https://studio.iterative.ai/api/live" }}
         run: dvc repro
 
       - name: Report results
