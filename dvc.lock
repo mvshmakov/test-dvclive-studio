@@ -4,13 +4,13 @@ stages:
     cmd: python test_live_metrics.py
     params:
       params.yaml:
-        epochs: 8
+        epochs: 5
         trigger: 1
     outs:
     - path: dvclive/metrics.json
-      md5: c643c4e03a3574f27351670c534f68aa
+      md5: 7603c1cc51b978d52a0d0fc5e47130c6
       size: 77
     - path: dvclive/plots
-      md5: 9f23a3e3fa8de61ad8f7d900c7cb53ce.dir
-      size: 341
+      md5: 1358b65726c71306df7b091a76312bbb.dir
+      size: 221
       nfiles: 2
