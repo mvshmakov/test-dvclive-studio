@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "@dvcorg/cml": "^0.18.1"
+    "@dvcorg/cml": "^0.20.6"
   }
 }
